@@ -1,0 +1,264 @@
+ /*BASE*/
+
+header > nav {
+	height: 76px;
+}
+
+.head-bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.nav-brand {
+	margin-left: 20px;
+}
+
+.nav-brand a {
+	text-decoration: none;
+	color: white;
+	display: inline;
+}
+
+.nav-brand:hover {
+	color: #fff;
+}
+
+a > h2 {
+	margin-bottom: 0px;
+}
+
+.search-bar {
+	width: 500px;
+}
+
+.account-block {
+	width: 225px;
+	margin: 0px;
+	margin-right: 8px;
+	color: #fff;
+}
+
+.account-block img {
+	width: 60px;
+}
+
+.account-row div{
+	/*display: none;*/
+}
+
+.logged-out-block {
+	display: none;
+	width: 115px;
+	float: right;
+}
+
+.user-block {
+	display: flex;
+	align-items: flex-start;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.logged-in-links a, .logged-out-block a {
+	margin-right: 5px;
+}
+
+main > .container {
+  padding: 60px 15px 0;
+  margin-top: 30px;
+  max-width: 1400px;
+}
+
+.lhs-col {
+	max-width: 1045px;
+	box-sizing: border-box;
+	padding: 20px;
+}
+
+.tags-block {
+	margin-bottom: 20px;
+}
+
+.rhs-col {
+	margin-top: 50px;
+}
+
+.nav-link {
+	margin-left: -16px;
+	font-size: 25px;
+}
+
+footer {
+	background-color: #343434;
+	width: 100%;
+	margin-top: 40px;
+	padding: 30px;
+}
+
+footer p {
+	margin-bottom: 8px;
+}
+
+
+ /*INDEX*/
+
+.page-name {
+	display: flex;
+	align-items: center;	
+    margin-top: -15px;
+    margin-bottom: 25px;
+}
+
+.page-name a {
+	margin-left: 20px;
+	font-size: 19px;
+}
+
+.card {
+	border: 1px grey solid;
+    border-radius: 20px;
+    padding: 15px;
+    margin-bottom: 26px;
+    margin-left: 0px;
+    margin-right: 0px;
+    /*height: 230px;*/
+    max-height: 270px;
+}
+
+.card img {
+	width: 130px;
+	margin: 0px auto;
+}
+
+.card-rate {
+	display: flex;
+	align-items: center;
+	font-size: 30px;
+	width: 50px;
+	margin: 10px auto 10px;
+}
+
+.card-rate label {
+	margin-top: 12px;
+	margin-right: 5px;
+}
+
+.btn-group-vertical img {
+	width: 20px;
+	color: #fff;
+}
+
+.btn-group-vertical .btn {
+	padding: 3px;
+	height: 30px;
+}
+
+.card-footer-span a {
+	margin-right: 5px;
+}
+
+.card-footer-span label {
+	margin-right: 5px;
+	margin-left: 10px;
+}
+
+/*QUESTION*/
+
+/*.question-lg {
+	margin-bottom: 20px;
+}*/
+
+.card-lg::after {
+	content: "";
+	display: block;
+	height: 1px;
+	width: 100%;
+	margin: 26px 0px;
+	background-color: #343434;
+}
+
+
+.card-lg > .col-3 > img {
+	width: 220px;
+}
+
+.card-lg-footer-span a {
+	margin-right: 5px;
+}
+
+.card-lg-footer-span label {
+	margin-right: 5px;
+}
+
+.form-check-input:checked {
+	background-color: green;
+	border-color: green;
+}
+
+.form-check-input:focus {
+	box-shadow: 0 0 0 0.25rem rgb(144 238 144 / 25%);
+}
+
+.form-answer {
+	margin-bottom: 26px;
+}
+
+.cards-answers::after {
+	content: "";
+	display: block;
+	height: 1px;
+	width: 100%;
+	margin-bottom: 26px;
+	background-color: #343434;
+}
+
+
+.form-floating>.form-control {
+	height: 150px;
+	box-sizing: border-box;
+}
+
+/*ASK*/
+
+.error-block {
+	/*display: none;*/
+}
+
+.error-block > ul {
+	list-style: none;
+	padding-inline-start: 0px;
+}
+
+.any-form .form-floating>.form-control {
+	height: 400px;
+}
+
+.any-form p {
+	margin-bottom: 0px;
+	margin-top: 5px;
+}
+
+/*TAG*/
+
+.tag-name {
+	margin-left: 15px;
+}
+
+.any-form img {
+	width: 150px;
+	margin-bottom: 20px;
+}
+
+.btn-form-footer{
+	margin-top: 10px;
+}
+
+/*LOGIN*/
+
+.create-account-ref {
+	margin-top: 20px;
+}
+
+/*SIGNUP*/
