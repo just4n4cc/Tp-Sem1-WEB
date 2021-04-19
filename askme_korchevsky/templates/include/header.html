@@ -1,0 +1,35 @@
+{% load static %}
+
+<header>
+      <nav class="navbar navbar-dark fixed-top bg-dark">
+        <div class="head-bar">
+          <div class="nav-brand">
+            <h2><a href="{% url 'index' %}">AskKorchevsky</a></h2>
+          </div>
+          <div class="search-bar">
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">ASK!</button>
+            </form>
+          </div>
+          <div class="container account-block">
+            <div class="row account-row">
+              <div class="col-4">
+                <img src="{% static 'img/grass.png' %}">
+              </div>
+              <div class="col-8 user-block">
+                <div class="row-6">Grass Block</div>
+                <div class="row-6 logged-in-links">
+                  <a href="{% url 'settings' %}">settings</a>
+                  <a href="#idk">log out</a>
+                </div>
+              </div>
+            </div>
+            <div class="logged-out-block">
+              <a href="login.html">log in</a>
+              <a href="signup.html">register</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
