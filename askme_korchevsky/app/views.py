@@ -1,3 +1,4 @@
+from django.core.paginator import InvalidPage, Paginator
 from django.shortcuts import render
 
 questions = [
@@ -5,7 +6,7 @@ questions = [
         'id': idx,
         'title': f'Title number {idx}',
         'text': f'Some text for question #{idx}'
-    } for idx in range(10)
+    } for idx in range(30)
 ]
 
 pop_tags = [
@@ -46,9 +47,24 @@ pop_tags = [
     }
 ]
 
+def paginate(list, request, per_page=10):
+    paginator = Paginator(list, per_page)
+    page = request.GET.get('page')
+    try:
+        new_list = paginator.get_page(page)
+    except InvalidPage:
+        return paginator.page(1)
+    return new_list
+
 
 def index(request):
-    return render(request, 'index.html', {'questions': questions, 'pop_tags': pop_tags})
+    list = paginate(questions, request)
+    return render(request, 'index.html', {'questions': list, 'pop_tags': pop_tags})
+
+
+def hot_questions(request):
+    list = paginate(questions, request)
+    return render(request, 'hot_questions.html', {'questions': list, 'pop_tags': pop_tags})
 
 
 def question(request, pk):
@@ -69,7 +85,8 @@ def signup(request):
 
 
 def tag(request, tag):
-    return render(request, 'tag.html', {'questions': questions, 'pop_tags': pop_tags, 'tag': tag})
+    list = paginate(questions, request, 5)
+    return render(request, 'tag.html', {'questions': list, 'pop_tags': pop_tags, 'tag': tag})
 
 
 def ask(request):

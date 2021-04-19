@@ -18,8 +18,8 @@
             <a href="{% url 'question' pk=question.id %}#answer">answer (3)</a>
             <label>Tags:</label>
 <!--            Tags:-->
-            <a href="#">BarakObama</a>
-            <a href="#">threat</a>
+            <a href="{% url 'tag' 'BarakObama' %}">BarakObama</a>
+            <a href="{% url 'tag' 'threat' %}">threat</a>
         </span>
     </div>
 </div>

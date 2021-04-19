@@ -37,41 +37,16 @@
           </div>
           <div class="col-3 rhs-col">
             {% block side %}
-            <div class="tags-block">
-              <h2>Popular Tags</h2>
-              <ul class="nav">
-                  {% for pop_tag in pop_tags %}
-                    <li class="nav-item">
-                        <a class="nav-link {{ pop_tag.color }}" href="{% url 'tag' tag=pop_tag.title %}">{{ pop_tag.title }}</a>
-                    </li>
-                  {% endfor %}
-              </ul>
-            </div>
-            <div class="members-block">
-              <h2>Best Members</h2>
-              <ul class="nav flex-column">
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Daisy</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Pig</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Sword</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Diamond</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Bookshelf</a>
-                </li>
-              </ul>
-            </div>
+              {% include "include/side_tags.html" %}
+              {% include "include/side_members.html" %}
             {% endblock side %}
           </div>
         </div>
+        {% block pagination %}
+        {% endblock pagination %}
       </div>
     </main>
+
 
     {% include "include/footer.html" %}
 
