@@ -13,7 +13,9 @@
     </div>
     <div class="col-10">
         <h3><a href="{% url 'question' pk=question.id %}">{{ question.title }}</a></h3>
-        <p>{{ question.text }}</p>
+        <p>
+            {{ question.text }}
+        </p>
         <span class = "card-footer-span">
             <a href="{% url 'question' pk=question.id %}#answer">answer (3)</a>
             <label>Tags:</label>
