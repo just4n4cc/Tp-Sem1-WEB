@@ -7,8 +7,8 @@ from django.contrib.auth.models import User
 
 class QuestionManger(models.Manager):
     def hot_questions(self):
-        return self.all().annotate(likes_count=(LikeQuestion.objects.all().filter(question__exact=self.__init__())\
-            .count())).order_by('likes_count')
+        return self.all().annotate(likes_count=(LikeQuestion.objects.filter(question__exact=self)\
+            .count())).order_by('-likes_count')
 
     def new_questions(self):
         return self.all().order_by('-pub_date')
@@ -29,7 +29,7 @@ class TagManager(models.Manager):
 
 class AnswerManager(models.Manager):
     def by_q(self, q_id):
-        return self.all().filter(question_id=q_id)
+        return self.filter(question_id=q_id)
 
 
 # ################ MODELS ################
@@ -66,6 +66,7 @@ class Question(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     pub_date = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag)
+    # rating = models.IntegerField()
 
     objects = QuestionManger()
 
