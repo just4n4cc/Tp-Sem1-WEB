@@ -4,8 +4,19 @@ from app.models import Question, Profile
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput())
+    username = forms.CharField(required=True)
+    password = forms.CharField(widget=forms.PasswordInput(), required=True)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        if not User.objects.filter(username=cleaned_data['username']).exists():
+            self.add_error('username', 'Wrong username!')
+        else:
+            user = User.objects.get(username=cleaned_data['username'])
+            if not user.check_password(cleaned_data['password']):
+                self.add_error('password', 'Wrong password!')
+
+        return cleaned_data
 
 
 class SignupForm(forms.ModelForm):
@@ -28,8 +39,7 @@ class SignupForm(forms.ModelForm):
 class SettingsForm(forms.Form):
     username = forms.CharField()
     email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput())
-    avatar = forms.ImageField()
+    avatar = forms.ImageField(required=False)
 
 
 class QuestionForm(forms.ModelForm):

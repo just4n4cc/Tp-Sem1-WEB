@@ -50,7 +50,6 @@ def question(request, pk):
     one_q = Question.objects.one_question(pk)
     pop_tags = Tag.objects.pop_tags()
     answers = paginate(Answer.objects.by_q(pk).order_by('-rating'), request, 5)
-    # answers = Answer.objects.by_q(pk).order_by('-rating')
     zipped_list = zip(pop_tags, pop_tags_color)
     return render(request, 'question.html', {'question': one_q, 'answers': answers, 'pop_tags': zipped_list, 'page_list': answers})
 
@@ -59,14 +58,19 @@ def question(request, pk):
 def settings(request):
     pop_tags = Tag.objects.pop_tags()
     zipped_list = zip(pop_tags, pop_tags_color)
-    form = SettingsForm()
     if request.method == 'GET':
-        print(request.user)
-        form.username = request.user.username
-        form.email = request.user.email
-        form.password = request.user.password
-        form.avatar = request.user.profile.avatar
-        return render(request, 'settings.html', {'pop_tags': zipped_list, 'form': form})
+        form = SettingsForm(initial={'username': request.user.username, 'email': request.user.email, 'avatar': request.user.profile.avatar})
+    else:
+        form = SettingsForm({'username': request.POST.get('username'), 'email': request.POST.get('email'), 'avatar': request.POST.get('avatar')})
+        if form.is_valid():
+            u = User.objects.get(username=request.user.username)
+            u.email = form.cleaned_data['email']
+            u.username = form.cleaned_data['username']
+            u.save()
+            if request.FILES.get('avatar') is not None:
+                u.profile.avatar = request.FILES.get('avatar')
+            u.profile.save()
+            form = SettingsForm(initial={'username': u.username, 'email': u.email, 'avatar': u.profile.avatar})
 
     return render(request, 'settings.html', {'pop_tags': zipped_list, 'form': form})
 

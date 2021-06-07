@@ -6,7 +6,7 @@
   <div class="page-name">
       <h2>Log In</h2>
   </div>
-  <form novalidate class="any-form" action="/login/" method="post">
+  <form class="any-form" action="/login/" method="post">
       {% bootstrap_form form %}
       {% csrf_token %}
       <input type="hidden" name="next" value="{{ request.GET.next }}"/>

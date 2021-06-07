@@ -7,7 +7,6 @@ from django.contrib.auth.models import User
 
 class QuestionManger(models.Manager):
     def hot_questions(self):
-        # return self.annotate(likes_count=(LikeQuestion.objects.filter(question__exact=self).count())) \
         req_q = self.all().order_by('-rating')
         return req_q.annotate(number_of_answers=Count('answer'))
 
