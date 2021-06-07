@@ -44,12 +44,7 @@ a > h2 {
 	width: 60px;
 }
 
-.account-row div{
-	/*display: none;*/
-}
-
 .logged-out-block {
-	display: none;
 	width: 115px;
 	float: right;
 }
@@ -272,6 +267,14 @@ footer p {
 
 .create-account-ref {
 	margin-top: 20px;
+}
+
+.form-group > label {
+	margin: 10px 0px 5px 0px;
+}
+
+.form-group > button {
+	margin-top: 15px;
 }
 
 /*SIGNUP*/

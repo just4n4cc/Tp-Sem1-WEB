@@ -13,22 +13,25 @@
             </form>
           </div>
           <div class="container account-block">
-            <div class="row account-row">
-              <div class="col-4">
-                <img src="{% static 'img/grass.png' %}">
-              </div>
-              <div class="col-8 user-block">
-                <div class="row-6">Grass Block</div>
-                <div class="row-6 logged-in-links">
-                  <a href="{% url 'settings' %}">settings</a>
-                  <a href="#idk">log out</a>
-                </div>
-              </div>
-            </div>
-            <div class="logged-out-block">
-              <a href="login.html">log in</a>
-              <a href="signup.html">register</a>
-            </div>
+              {% if request.user.is_authenticated %}
+                  <div class="row account-row">
+                      <div class="col-4">
+                        <img src="{{ request.user.profile.avatar.url }}">
+                      </div>
+                      <div class="col-8 user-block">
+                          <div class="row-6">{{ request.user.username }}</div>
+                          <div class="row-6 logged-in-links">
+                              <a href="{% url 'settings' %}">settings</a>
+                              <a href="{% url 'logout' %}">log out</a>
+                          </div>
+                      </div>
+                  </div>
+              {% else %}
+                  <div class="logged-out-block">
+                      <a href="{% url 'login' %}">log in</a>
+                      <a href="{% url 'signup' %}">register</a>
+                  </div>
+              {% endif %}
           </div>
         </div>
       </nav>

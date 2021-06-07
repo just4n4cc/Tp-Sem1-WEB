@@ -4,9 +4,9 @@
 {% block content %}
     <div class="row card-lg">
         <div class="col-3">
-            <img src="{% static 'img/bookshelf.png' %}">
+            <img src="{{ question.author.avatar.url }}">
             <div class="card-rate">
-                <label>5</label>
+                <label>{{ question.rating }}</label>
                 <div class="btn-group-vertical" role="group">
                     <button type="button" class="btn btn-outline-light"><img src="{% static 'img/caretup.svg' %}">
                     </button>
@@ -20,8 +20,9 @@
             <p>{{ question.text }}</p>
             <span class="card-lg-footer-span">
                   <label>Tags:</label>
-                  <a href="#">BarakObama</a>
-                  <a href="#">threat</a>
+                  {% for tag in question.tags.all %}
+                      <a href="{% url 'tag' tag.title %}">{{ tag.title }}</a>
+                  {% endfor %}
             </span>
         </div>
     </div>
@@ -30,6 +31,10 @@
             {% include "include/card_answer.html" %}
         {% endfor %}
     </div>
+    {% block pagination %}
+        {% include "include/pagination.html" %}
+    {% endblock pagination %}
+
     <form class="form-floating form-answer">
         <textarea class="form-control" placeholder="Leave a comment here" id="answer"></textarea>
         <label for="answer">Leave your answer here</label>

@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls.static import static
+from django.conf import settings
 
 from app import views
 
@@ -23,9 +25,10 @@ urlpatterns = [
     path('hot_questions/', views.hot_questions, name='hot_questions'),
     path('question/<int:pk>/', views.question, name='question'),
     path('ask/', views.ask, name='ask'),
-    path('settings/', views.settings, name='settings'),
+    path('profile/edit/', views.settings, name='settings'),
     path('login/', views.login, name='login'),
     path('signup/', views.signup, name='signup'),
     path('tag/<str:tag>', views.tag, name='tag'),
     path('', views.index, name='index'),
-]
+    path('logout/', views.logout, name='logout'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

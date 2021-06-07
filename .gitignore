@@ -5,4 +5,4 @@ node_modules/
 *.pyc
 __pycache__/
 media/
-db.sqlite3
+askme_korchevsky/db.sqlite3

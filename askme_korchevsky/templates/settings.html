@@ -1,46 +1,49 @@
 {% extends "include/base.html" %}
 {% load static %}
+{% load bootstrap4 %}
 
 {% block content %}
   <div class="page-name">
-              <h2>Settings: Grass Block</h2>
-            </div>
-  <div class="error-block">
-              <ul>
-                <li><p class="text-danger">Some FATAL EROR!</p></li>
-              </ul>
-            </div>
-  <form class="any-form">
-              <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label">Login</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" maxlength ="20" value="grass_block">
-                  <p class="text-end text-secondary">0/20</p>
-                </div>
-              </div>
-              <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label" maxlength ="30">Email</label>
-                <div class="col-sm-10">
-                  <input type="email" class="form-control" value="grassy@mail.ru">
-                <p class="text-end text-secondary">0/30</p>
-                </div>
-              </div>
-              <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label" maxlength ="20">NickName</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" value="Grass Block">
-                  <p class="text-end text-secondary">0/20</p>
-                </div>
-              </div>
-              <div class="mb-3 row">
-                <label class="col-sm-2 col-form-label" maxlength ="20">Upload avatar</label>
-                <div class="col-sm-10">
-                  <img src="{% static 'img/grass.png' %}">
-                  <div class="mb-3">
-                    <input class="form-control" type="file" id="formFile">
-                  </div>
-                  <button type="button" class="btn btn-success btn-form-footer">Save</button>
-                </div>
-              </div>
-            </form>
+              <h2>Settings: {{ request.user.username }}</h2>
+  </div>
+  <form class="any-form" action="/profile/edit/" method="post" enctype="multipart/form-data">
+    {% bootstrap_form form %}
+    {% csrf_token %}
+    {% buttons %}
+      <button type="submit" class="btn btn-success">
+          Save!
+      </button>
+    {% endbuttons %}
+{#              <div class="mb-3 row">#}
+{#                <label class="col-sm-2 col-form-label">Login</label>#}
+{#                <div class="col-sm-10">#}
+{#                  <input type="text" class="form-control" maxlength ="20" value="grass_block">#}
+{#                  <p class="text-end text-secondary">0/20</p>#}
+{#                </div>#}
+{#              </div>#}
+{#              <div class="mb-3 row">#}
+{#                <label class="col-sm-2 col-form-label" maxlength ="30">Email</label>#}
+{#                <div class="col-sm-10">#}
+{#                  <input type="email" class="form-control" value="grassy@mail.ru">#}
+{#                <p class="text-end text-secondary">0/30</p>#}
+{#                </div>#}
+{#              </div>#}
+{#              <div class="mb-3 row">#}
+{#                <label class="col-sm-2 col-form-label" maxlength ="20">NickName</label>#}
+{#                <div class="col-sm-10">#}
+{#                  <input type="text" class="form-control" value="Grass Block">#}
+{#                  <p class="text-end text-secondary">0/20</p>#}
+{#                </div>#}
+{#              </div>#}
+{#              <div class="mb-3 row">#}
+{#                <label class="col-sm-2 col-form-label" maxlength ="20">Upload avatar</label>#}
+{#                <div class="col-sm-10">#}
+{#                  <img src="{% static 'img/grass.png' %}">#}
+{#                  <div class="mb-3">#}
+{#                    <input class="form-control" type="file" id="formFile">#}
+{#                  </div>#}
+{#                  <button type="button" class="btn btn-success btn-form-footer">Save</button>#}
+{#                </div>#}
+{#              </div>#}
+  </form>
 {% endblock content %}

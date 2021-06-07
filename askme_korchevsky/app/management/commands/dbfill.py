@@ -58,7 +58,7 @@ class Command(BaseCommand):
                            + faker.word()
                            + str(random.randint(-9, 9)))) for i in range(num))
 
-        batch_size = 1000
+        batch_size = 10000
         while True:
             batch = list(islice(objs, batch_size))
             if not batch:
@@ -102,14 +102,14 @@ class Command(BaseCommand):
         ]
         separators = [".", ",", ":", ";", "&", "+", "-", "_", "@", "№", "!", "*", "<", ">", "%", "~", "|"]
         for i in range(num):
-            user = User.objects.create(username=(faker.name()
-                                                 + str(random.randint(-9, 9))
-                                                 + random.choice(separators)
-                                                 + str(random.randint(-9, 9))
-                                                 + faker.user_name()
-                                                 + str(random.randint(-50, 50))),
-                                       password=faker.password(),
-                                       email=faker.email())
+            user = User.objects.create_user(username=(faker.name()
+                                            + str(random.randint(-9, 9))
+                                            + random.choice(separators)
+                                            + str(random.randint(-9, 9))
+                                            + faker.user_name()
+                                            + str(random.randint(-50, 50))),
+                                            password=faker.password(),
+                                            email=faker.email())
             obj = Profile(user=user)
             f = open("./static/img/" + images[i % len(images)], "rb")
             obj.avatar = File(f)
@@ -122,7 +122,8 @@ class Command(BaseCommand):
             obj = Question.objects.create(title=(faker.unique.sentence()[:55][:-1] + '?'),
                                           text=faker.unique.paragraph(nb_sentences=11),
                                           author_id=choice(authors),
-                                          pub_date=faker.unique.date_time_between("-150d", "now"))
+                                          pub_date=faker.unique.date_time_between("-150d", "now"),
+                                          rating=0)
             for j in range(1, random.randint(2, 5)):
                 obj.tags.add(choice(tags))
 
@@ -155,6 +156,7 @@ class Command(BaseCommand):
                          text=faker.unique.paragraph(nb_sentences=15),
                          author_id=choice(authors),
                          pub_date=faker.unique.date_time_between("-150d", "now"),
+                         rating=0,
                          is_correct=bool(random.getrandbits(1)))
             objs.append(obj)
 
