@@ -69,6 +69,7 @@ class Command(BaseCommand):
     def fill_with_users(self, num):
         images = [
             "allium.png",
+            "bee.png",
             "bookshelf.png",
             "bow.png",
             "bread.png",
@@ -86,6 +87,7 @@ class Command(BaseCommand):
             "goat.png",
             "grass.png",
             "honey.png",
+            "ifrit.png",
             "lantern.png",
             "leather.png",
             "melon.png",

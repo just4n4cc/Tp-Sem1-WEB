@@ -93,8 +93,8 @@ class Answer(models.Model):
     text = models.TextField(max_length=500)
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     pub_date = models.DateTimeField(auto_now_add=True)
-    is_correct = models.BooleanField()
-    rating = models.IntegerField()
+    is_correct = models.BooleanField(default=False)
+    rating = models.IntegerField(default=0)
 
     objects = AnswerManager()
 

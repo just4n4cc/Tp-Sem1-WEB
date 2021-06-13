@@ -41,7 +41,8 @@ a > h2 {
 }
 
 .account-block img {
-	width: 60px;
+	max-width: 60px;
+	max-height: 60px;
 }
 
 .logged-out-block {
@@ -246,6 +247,12 @@ footer p {
 .any-form p {
 	margin-bottom: 0px;
 	margin-top: 5px;
+}
+
+.form-group
+
+[id^=id_tags] {
+	margin-bottom: 10px;
 }
 
 /*TAG*/

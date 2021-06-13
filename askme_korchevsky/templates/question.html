@@ -1,5 +1,6 @@
 {% extends "include/base.html" %}
 {% load static %}
+{% load bootstrap4 %}
 
 {% block content %}
     <div class="row card-lg">
@@ -28,16 +29,31 @@
     </div>
     <div class="cards-answers">
         {% for answer in answers %}
-            {% include "include/card_answer.html" %}
+            {% if forloop.counter == answers|length %}
+                {% with last_question=1 %}
+                    {% include "include/card_answer.html" %}
+                {% endwith %}
+            {% else %}
+                {% include "include/card_answer.html" %}
+            {% endif %}
         {% endfor %}
     </div>
     {% block pagination %}
         {% include "include/pagination.html" %}
     {% endblock pagination %}
 
-    <form class="form-floating form-answer">
-        <textarea class="form-control" placeholder="Leave a comment here" id="answer"></textarea>
-        <label for="answer">Leave your answer here</label>
-        <button type="button" class="btn btn-success btn-form-footer">Answer</button>
-    </form>
+
+    {% if request.user.is_authenticated %}
+          <form class="any-form" action="{% url 'question' pk=question.id %}#last_question" method="post">
+    {% else %}
+          <form class="any-form" action="{% url 'question' pk=question.id %}#id_pagination" method="post">
+    {% endif %}
+    {% bootstrap_form form %}
+    {% csrf_token %}
+    {% buttons %}
+      <button type="submit" class="btn btn-success">
+          Answer
+      </button>
+    {% endbuttons %}
+  </form>
 {% endblock content %}

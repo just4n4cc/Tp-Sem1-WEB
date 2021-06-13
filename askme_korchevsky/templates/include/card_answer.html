@@ -1,6 +1,10 @@
 {% load static %}
 
-<div class="row card shadow">
+{% if last_question %}
+    <div class="row card shadow" id="last_question">
+{% else %}
+    <div class="row card shadow">
+{% endif %}
     <div class="col-2">
         <img src="{{answer.author.avatar.url}}">
         <div class="card-rate">

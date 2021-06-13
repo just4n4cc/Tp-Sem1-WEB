@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 
 from django.contrib.auth.models import User
 from app.models import Tag, Question, Answer, Profile
-from app.forms import LoginForm, SignupForm, QuestionForm, SettingsForm
+from app.forms import LoginForm, SignupForm, QuestionForm, SettingsForm, AnswerForm
 
 
 pop_tags_color = [
@@ -22,9 +22,12 @@ pop_tags_color = [
 ]
 
 
-def paginate(content_list, request, per_page=10):
+def paginate(content_list, request, per_page=10, last=False):
     paginator = Paginator(content_list, per_page)
-    page = request.GET.get('page')
+    if last:
+        page = paginator.num_pages
+    else:
+        page = request.GET.get('page')
     try:
         new_list = paginator.get_page(page)
     except InvalidPage:
@@ -47,11 +50,31 @@ def hot_questions(request):
 
 
 def question(request, pk):
+    request.path += '#lala'
+    print(request.path)
     one_q = Question.objects.one_question(pk)
     pop_tags = Tag.objects.pop_tags()
-    answers = paginate(Answer.objects.by_q(pk).order_by('-rating'), request, 5)
+    answers = paginate(Answer.objects.by_q(pk), request, 5)
     zipped_list = zip(pop_tags, pop_tags_color)
-    return render(request, 'question.html', {'question': one_q, 'answers': answers, 'pop_tags': zipped_list, 'page_list': answers})
+    form = AnswerForm()
+    if request.method == 'POST':
+        if not request.user.is_authenticated:
+            form = AnswerForm(data=request.POST)
+            form.add_error(None, "You have to log in to leave any answers!")
+        else:
+            Answer.objects.create(
+                question=one_q,
+                text=request.POST.get('answer'),
+                author=request.user.profile
+            )
+            answers = paginate(Answer.objects.by_q(pk).order_by(), request, 5, True)
+
+    return render(request, 'question.html', {
+        'question': one_q,
+        'answers': answers,
+        'pop_tags': zipped_list,
+        'form': form,
+        'page_list': answers})
 
 
 @login_required
@@ -63,7 +86,7 @@ def settings(request):
     else:
         form = SettingsForm({'username': request.POST.get('username'), 'email': request.POST.get('email'), 'avatar': request.POST.get('avatar')})
         if form.is_valid():
-            u = User.objects.get(username=request.user.username)
+            u = request.user
             u.email = form.cleaned_data['email']
             u.username = form.cleaned_data['username']
             u.save()
@@ -125,7 +148,7 @@ def tag(request, tag):
     tag_q_list = paginate(Question.objects.tag_questions(tag), request, 5)
     pop_tags = Tag.objects.pop_tags()
     zipped_list = zip(pop_tags, pop_tags_color)
-    return render(request, 'tag.html', {'tag': tag, 'questions': tag_q_list, 'pop_tags': zipped_list})
+    return render(request, 'tag.html', {'tag': tag, 'questions': tag_q_list, 'pop_tags': zipped_list, 'page_list': tag_q_list})
 
 
 @login_required
@@ -135,10 +158,19 @@ def ask(request):
     if request.method == 'GET':
         form = QuestionForm()
     else:
-        form = QuestionForm(data=request.POST)
+        form = QuestionForm({'title': request.POST.get('title'), 'text': request.POST.get('text')})
         if form.is_valid():
+            # raise
             q = form.save(commit=False)
             q.author = request.user.profile
+            tags = []
+            for i in range(5):
+                if request.POST.get('tags_' + str(i)) != '' and request.POST.get('tags_' + str(i)) not in tags:
+                    if not Tag.objects.filter(title=request.POST.get('tags_' + str(i))):
+                        Tag.objects.create(title=request.POST.get('tags_' + str(i)))
+                    tags.append(request.POST.get('tags_' + str(i)))
+            q.save()
+            q.tags.set(Tag.objects.filter(title__in=tags))
             q.save()
             return redirect(reverse('question', kwargs={'pk': q.pk}))
 

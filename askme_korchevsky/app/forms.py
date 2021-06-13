@@ -1,6 +1,7 @@
 from django import forms
+from django.contrib.postgres.forms import SplitArrayField
 from django.contrib.auth.models import User
-from app.models import Question, Profile
+from app.models import Question, Answer
 
 
 class LoginForm(forms.Form):
@@ -45,5 +46,10 @@ class SettingsForm(forms.Form):
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ['title', 'text', 'tags']
+        fields = ['title', 'text']
 
+    tags = SplitArrayField(forms.CharField(max_length=50), size=5, remove_trailing_nulls=True, required=False)
+
+
+class AnswerForm(forms.Form):
+    answer = forms.CharField(widget=forms.Textarea())
