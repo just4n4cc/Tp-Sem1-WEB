@@ -1,0 +1,10 @@
+<div class="tags-block">
+    <h2>Popular Tags</h2>
+    <ul class="nav">
+        {% for pop_tag in pop_tags %}
+            <li class="nav-item">
+                <a class="nav-link {{ pop_tag.1 }}" href="{% url 'tag' tag=pop_tag.0.title %}">{{ pop_tag.0.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>

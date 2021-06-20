@@ -1,0 +1,30 @@
+{% load static %}
+
+<div class="row card shadow">
+    <div class="col-2">
+        <img src="{{question.author.avatar.url }}">
+        <div class="card-rate">
+            <label>{{ question.rating }}</label>
+            <div class="btn-group-vertical" role="group">
+                <button type="button" class="btn btn-outline-light"><img src="{% static 'img/caretup.svg' %}"></button>
+                <button type="button" class="btn btn-outline-light"><img src="{% static 'img/caretdown.svg' %}"></button>
+            </div>
+        </div>
+    </div>
+    <div class="col-10">
+        <h3><a href="{% url 'question' pk=question.id %}">{{ question.title }}</a></h3>
+        <p>
+            {{ question.text }}
+        </p>
+        <span class = "card-footer-span">
+            <a href="{% url 'question' pk=question.id %}">answers ({{ question.number_of_answers }})</a>
+            <label>Tags:</label>
+<!--            Tags:-->
+            {% for tag in question.tags.all %}
+                <a href="{% url 'tag' tag.title %}">{{ tag.title }}</a>
+            {% endfor %}
+{#            <a href="{% url 'tag' 'BarakObama' %}">BarakObama</a>#}
+{#            <a href="{% url 'tag' 'threat' %}">threat</a>#}
+        </span>
+    </div>
+</div>

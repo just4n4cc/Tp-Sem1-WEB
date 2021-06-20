@@ -1,0 +1,18 @@
+{% extends "include/base.html" %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block content %}
+  <div class="page-name">
+              <h2>New Question</h2>
+            </div>
+  <form class="any-form" action="/ask/" method="post">
+    {% bootstrap_form form %}
+    {% csrf_token %}
+    {% buttons %}
+      <button type="submit" class="btn btn-success">
+          ASK!
+      </button>
+    {% endbuttons %}
+  </form>
+{% endblock content %}

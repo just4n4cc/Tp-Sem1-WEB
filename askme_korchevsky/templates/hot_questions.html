@@ -1,0 +1,15 @@
+{% extends "include/base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="page-name">
+        <h2>Hot Questions</h2>
+    </div>
+    {% for question in questions %}
+        {% include "include/card_question.html" %}
+    {% endfor %}
+
+{% block pagination %}
+    {% include "include/pagination.html" %}
+{% endblock pagination %}
+{% endblock content %}
