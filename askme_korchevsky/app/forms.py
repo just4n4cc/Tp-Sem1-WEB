@@ -48,7 +48,8 @@ class QuestionForm(forms.ModelForm):
         model = Question
         fields = ['title', 'text']
 
-    tags = SplitArrayField(forms.CharField(max_length=50), size=5, remove_trailing_nulls=True, required=False)
+    # tags = SplitArrayField(forms.CharField(max_length=50), size=5, remove_trailing_nulls=True, required=False)
+    tags = forms.CharField(required=False, max_length=100, help_text="Split tags with space")
 
 
 class AnswerForm(forms.Form):

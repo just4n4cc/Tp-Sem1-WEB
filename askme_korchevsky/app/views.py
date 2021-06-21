@@ -1,3 +1,5 @@
+from itertools import groupby
+
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from django.shortcuts import redirect
@@ -5,8 +7,11 @@ from django.core.paginator import InvalidPage, Paginator
 from django.shortcuts import render, reverse
 from django import conf
 from urllib.parse import urlparse
+import re
 
 from django.contrib.auth.models import User
+from prompt_toolkit.contrib.regular_languages.regex_parser import Regex
+
 from app.models import Tag, Question, Answer, Profile
 from app.forms import LoginForm, SignupForm, QuestionForm, SettingsForm, AnswerForm
 
@@ -50,7 +55,6 @@ def hot_questions(request):
 
 
 def question(request, pk):
-    request.path += '#lala'
     print(request.path)
     one_q = Question.objects.one_question(pk)
     pop_tags = Tag.objects.pop_tags()
@@ -160,15 +164,16 @@ def ask(request):
     else:
         form = QuestionForm({'title': request.POST.get('title'), 'text': request.POST.get('text')})
         if form.is_valid():
-            # raise
             q = form.save(commit=False)
             q.author = request.user.profile
-            tags = []
-            for i in range(5):
-                if request.POST.get('tags_' + str(i)) != '' and request.POST.get('tags_' + str(i)) not in tags:
-                    if not Tag.objects.filter(title=request.POST.get('tags_' + str(i))):
-                        Tag.objects.create(title=request.POST.get('tags_' + str(i)))
-                    tags.append(request.POST.get('tags_' + str(i)))
+            tags = request.POST.get('tags')
+            tags = re.sub(' +', ' ', tags)
+            tags = re.sub(r"^\s+|\s+$", "", tags)
+            tags = re.split(" ", tags)
+            tags = [el for el, _ in groupby(tags)][:5]
+            for tag_ in tags:
+                if not Tag.objects.filter(title=tag_):
+                    Tag.objects.create(title=tag_)
             q.save()
             q.tags.set(Tag.objects.filter(title__in=tags))
             q.save()
